@@ -1,15 +1,16 @@
-let contatos = [];
+const pool = require('../config/database');
 
-function listarContatos() {
-    return contatos;
+async function listarContatos() {
+    const buscarContatos = await pool.query('SELECT * FROM contatos');
+    return buscarContatos[0];
 }
 
-function criarContato(nome, telefone) {
-    const novoContato = { id: contatos.length + 1, nome, telefone };
-    contatos.push(novoContato);
-
-    return novoContato;
+async function criarContato(nome, telefone) {
+    const novoContato = await pool.query(`INSERT INTO contatos (nome, telefone) VALUES ('${nome}', '${telefone}')`); {
+        return novoContato[0];
+    }
 }
+
 
 module.exports = { 
     listarContatos,
